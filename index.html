@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AG Pay</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f4f7fb;
+    color: #172033;
+}
+
+.app {
+    max-width: 480px;
+    margin: auto;
+    min-height: 100vh;
+    background: white;
+    padding-bottom: 80px;
+}
+
+/* HEADER */
+.header {
+    background: #0757c8;
+    color: white;
+    padding: 25px 20px;
+    border-radius: 0 0 25px 25px;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.welcome {
+    margin-top: 25px;
+    font-size: 15px;
+}
+
+.balance {
+    font-size: 32px;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+/* CONTENT */
+.content {
+    padding: 20px;
+}
+
+.section-title {
+    font-size: 19px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* QUICK ACTIONS */
+.actions {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+}
+
+.action {
+    border: none;
+    background: #eef5ff;
+    padding: 18px 10px;
+    border-radius: 15px;
+    color: #0757c8;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.action span {
+    display: block;
+    font-size: 27px;
+    margin-bottom: 7px;
+}
+
+/* TRANSACTIONS */
+.transaction {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.transaction-name {
+    font-weight: bold;
+}
+
+.transaction-date {
+    color: #888;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.amount {
+    color: #079447;
+    font-weight: bold;
+}
+
+/* PAGES */
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+/* FORM */
+.form-group {
+    margin-bottom: 18px;
+}
+
+label {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+.primary-btn {
+    width: 100%;
+    padding: 15px;
+    background: #0757c8;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* PROFILE */
+.profile-card {
+    background: #f4f7fb;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 15px;
+}
+
+.profile-card p {
+    margin-top: 8px;
+    color: #555;
+}
+
+/* BOTTOM NAVIGATION */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 480px;
+    background: white;
+    display: flex;
+    justify-content: space-around;
+    padding: 12px 5px;
+    border-top: 1px solid #ddd;
+    box-shadow: 0 -3px 10px rgba(0,0,0,0.08);
+}
+
+.nav-btn {
+    border: none;
+    background: none;
+    color: #777;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.nav-btn span {
+    display: block;
+    font-size: 22px;
+    margin-bottom: 3px;
+}
+
+.nav-btn.active {
+    color: #0757c8;
+    font-weight: bold;
+}
+
+/* MESSAGE */
+.message {
+    display: none;
+    background: #e7f8ee;
+    color: #087b3e;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- HOME PAGE -->
+<div id="home" class="page active">
+
+    <div class="header">
+        <div class="logo">AG Pay</div>
+
+        <div class="welcome">
+            Welcome back 👋
+        </div>
+
+        <div class="balance">
+            GH₵ 2,450.00
+        </div>
+    </div>
+
+    <div class="content">
+
+        <div class="section-title">Quick Actions</div>
+
+        <div class="actions">
+
+            <button class="action" onclick="showPage('receive')">
+                <span>💰</span>
+                Receive Payment
+            </button>
+
+            <button class="action" onclick="showPage('link')">
+                <span>🔗</span>
+                Payment Link
+            </button>
+
+            <button class="action" onclick="showPage('transactions')">
+                <span>📊</span>
+                Transactions
+            </button>
+
+            <button class="action" onclick="showPage('profile')">
+                <span>👤</span>
+                Profile
+            </button>
+
+        </div>
+
+        <div class="section-title">Recent Transactions</div>
+
+        <div class="transaction">
+            <div>
+                <div class="transaction-name">Kwame Mensah</div>
+                <div class="transaction-date">Today, 10:32 AM</div>
+            </div>
+
+            <div class="amount">+ GH₵ 150</div>
+        </div>
+
+        <div class="transaction">
+            <div>
+                <div class="transaction-name">Ama Store</div>
+                <div class="transaction-date">Yesterday</div>
+            </div>
+
+            <div class="amount">+ GH₵ 300</div>
+        </div>
+
+        <div class="transaction">
+            <div>
+                <div class="transaction-name">John Services</div>
+                <div class="transaction-date">Aug 11</div>
+            </div>
+
+            <div class="amount">+ GH₵ 500</div>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- RECEIVE PAYMENT -->
+<div id="receive" class="page">
+
+    <div class="header">
+        <div class="logo">Receive Payment</div>
+    </div>
+
+    <div class="content">
+
+        <div id="receiveMessage" class="message">
+            Payment request created successfully!
+        </div>
+
+        <div class="form-group">
+            <label>Customer Name</label>
+            <input id="customerName" type="text"
+                   placeholder="Enter customer name">
+        </div>
+
+        <div class="form-group">
+            <label>Amount (GH₵)</label>
+            <input id="paymentAmount" type="number"
+                   placeholder="Enter amount">
+        </div>
+
+        <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel"
+                   placeholder="Customer phone number">
+        </div>
+
+        <button class="primary-btn"
+                onclick="createPayment()">
+            Create Payment Request
+        </button>
+
+    </div>
+</div>
+
+
+<!-- PAYMENT LINK -->
+<div id="link" class="page">
+
+    <div class="header">
+        <div class="logo">Payment Link</div>
+    </div>
+
+    <div class="content">
+
+        <div id="linkMessage" class="message">
+            Payment link created!
+        </div>
+
+        <div class="form-group">
+            <label>Amount (GH₵)</label>
+            <input id="linkAmount" type="number"
+                   placeholder="Enter amount">
+        </div>
+
+        <div class="form-group">
+            <label>Description</label>
+            <input id="description"
+                   type="text"
+                   placeholder="What is the customer paying for?">
+        </div>
+
+        <button class="primary-btn"
+                onclick="createLink()">
+            Generate Payment Link
+        </button>
+
+        <br><br>
+
+        <input id="generatedLink"
+               readonly
+               style="display:none;">
+
+    </div>
+</div>
+
+
+<!-- TRANSACTIONS -->
+<div id="transactions" class="page">
+
+    <div class="header">
+        <div class="logo">Transactions</div>
+    </div>
+
+    <div class="content">
+
+        <div class="section-title">
+            Transaction History
+        </div>
+
+        <div class="transaction">
+            <div>
+                <div class="transaction-name">
+                    Kwame Mensah
+                </div>
+                <div class="transaction-date">
+                    Aug 13, 10:32 AM
+                </div>
+            </div>
+
+            <div class="amount">
+                + GH₵ 150
+            </div>
+        </div>
+
+        <div class="transaction">
+            <div>
+                <div class="transaction-name">
+                    Ama Store
+                </div>
+                <div class="transaction-date">
+                    Aug 12
+                </div>
+            </div>
+
+            <div class="amount">
+                + GH₵ 300
+            </div>
+        </div>
+
+        <div class="transaction">
+            <div>
+                <div class="transaction-name">
+                    John Services
+                </div>
+                <div class="transaction-date">
+                    Aug 11
+                </div>
+            </div>
+
+            <div class="amount">
+                + GH₵ 500
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- PROFILE -->
+<div id="profile" class="page">
+
+    <div class="header">
+        <div class="logo">My Profile</div>
+    </div>
+
+    <div class="content">
+
+        <div class="profile-card">
+            <h3>Augustine Studio's</h3>
+            <p>Business account</p>
+        </div>
+
+        <div class="profile-card">
+            <strong>Business Owner</strong>
+            <p>Augustine Lavor</p>
+        </div>
+
+        <div class="profile-card">
+            <strong>Account Status</strong>
+            <p>Demo Account</p>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- BOTTOM NAVIGATION -->
+<div class="bottom-nav">
+
+    <button class="nav-btn active"
+            onclick="showPage('home', this)">
+        <span>🏠</span>
+        Home
+    </button>
+
+    <button class="nav-btn"
+            onclick="showPage('receive', this)">
+        <span>💰</span>
+        Receive
+    </button>
+
+    <button class="nav-btn"
+            onclick="showPage('transactions', this)">
+        <span>📊</span>
+        Transactions
+    </button>
+
+    <button class="nav-btn"
+            onclick="showPage('profile', this)">
+        <span>👤</span>
+        Profile
+    </button>
+
+</div>
+
+</div>
+
+
+<script>
+
+function showPage(pageId, button) {
+
+    // Hide all pages
+    let pages = document.querySelectorAll(".page");
+
+    pages.forEach(function(page) {
+        page.classList.remove("active");
+    });
+
+    // Show selected page
+    document.getElementById(pageId)
+        .classList.add("active");
+
+    // Update navigation
+    let navButtons =
+        document.querySelectorAll(".nav-btn");
+
+    navButtons.forEach(function(btn) {
+        btn.classList.remove("active");
+    });
+
+    if (button) {
+        button.classList.add("active");
+    }
+}
+
+
+function createPayment() {
+
+    let name =
+        document.getElementById("customerName").value;
+
+    let amount =
+        document.getElementById("paymentAmount").value;
+
+    if (name === "" || amount === "") {
+
+        alert("Please enter the customer name and amount.");
+
+        return;
+    }
+
+    document.getElementById("receiveMessage")
+        .style.display = "block";
+
+    document.getElementById("receiveMessage")
+        .innerText =
+        "Payment request for GH₵ " +
+        amount +
+        " created successfully!";
+
+}
+
+
+function createLink() {
+
+    let amount =
+        document.getElementById("linkAmount").value;
+
+    let description =
+        document.getElementById("description").value;
+
+    if (amount === "") {
+
+        alert("Please enter an amount.");
+
+        return;
+    }
+
+    let link =
+        "https://agpay.example/pay/" +
+        amount;
+
+    document.getElementById("generatedLink")
+        .style.display = "block";
+
+    document.getElementById("generatedLink")
+        .value = link;
+
+    document.getElementById("linkMessage")
+        .style.display = "block";
+
+    document.getElementById("linkMessage")
+        .innerText =
+        "Demo payment link created for GH₵ " +
+        amount + ".";
+
+}
+
+</script>
+
+</body>
+</html>
